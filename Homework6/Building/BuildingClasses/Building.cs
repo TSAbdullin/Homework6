@@ -20,7 +20,7 @@
 
         public ushort CalculateHeightOfFloor() // ushort использовал, потому что максимальная высота этажа в мире - 828 (Бурдж-Халифа)
         {
-            return (byte)(_height / _amountOfFloors);
+            return (ushort)(_height / _amountOfFloors);
         }
 
         public ushort CalculateAmountOfFlatsInEntrance() // количество квартир в подъезде
