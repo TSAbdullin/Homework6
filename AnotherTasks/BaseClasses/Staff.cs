@@ -17,32 +17,43 @@ namespace AnotherTasks.BaseClasses
             if (ListOfTasks.ContainsKey(id)) 
             {
                 ListOfTasks.Remove(id);
-                Console.WriteLine("Задача удалена!");
+                Console.WriteLine("Задача удалена!\n");
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Задания с таким идентификатором не найдено!");
+                throw new ArgumentOutOfRangeException("Задания с таким идентификатором не найдено!\n");
             }
         }
 
-        public void AddTask(Tasks task) // метод для добавления задания
+        public void Feed(Cattle targetAnimal) // покормить 
         {
-            if (task != null)
+            if (Role.Equals(Role.Доярки))
             {
-                if (!ListOfTasks.ContainsValue(task))
-                {
-                    ListOfTasks.Add(task.Id, task);
-                    Console.WriteLine("Задание добавлено!");
-                }
-                else
-                {
-                    Console.WriteLine("Задание уже существует!");
-                }
+                Console.WriteLine($"{Name} покормил {targetAnimal.Name}\n");
             }
             else
             {
-                throw new ArgumentNullException("Задание или список задач равны null!");
+                Console.WriteLine($"Роль {Role} не позволяет {Name} покормить {targetAnimal.Name}\n");
             }
+        }
+
+        public void AddTask() // метод для добавления задания
+        {
+            Console.Write("Введите название задачи: ");
+            string titleTask = Console.ReadLine();
+
+            if (titleTask == null || titleTask == String.Empty)
+            {
+                throw new ArgumentNullException("Название задачи не может быть пустым!\n");
+            }
+
+            Console.Write("Введите описание задач: ");
+            string descriptionTask = Console.ReadLine();
+
+            Tasks task = new Tasks(titleTask, descriptionTask);
+            
+            ListOfTasks.Add(task.Id, task);
+            Console.WriteLine("Задание успешно добавлено\n");
         }
 
         public void PrintAllTasks() // метод на печать задач
@@ -56,7 +67,7 @@ namespace AnotherTasks.BaseClasses
             }
             else
             {
-                Console.WriteLine("Список задач пуст!");
+                Console.WriteLine("Список задач пуст!\n");
             }
         }
         

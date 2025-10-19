@@ -17,21 +17,21 @@
                 if (AmountOfCurrentAnimals.Count < MaxCapacityOfAnimals && !AmountOfCurrentAnimals.ContainsKey(animal.Id))
                 {
                     AmountOfCurrentAnimals.Add(animal.Id, animal);
-                    Console.WriteLine($"Животное {animal.Name} успешно добавлено в коровник {Title}");
+                    Console.WriteLine($"Животное {animal.Name} успешно добавлено в коровник {Title}\n");
                 }
                 else if (AmountOfCurrentAnimals.Count == MaxCapacityOfAnimals)
                 {
-                    throw new ArgumentOutOfRangeException($"Коровник {Title} переполнен! Добавить животное {animal.Name} не удалось!");
+                    throw new ArgumentOutOfRangeException($"Коровник {Title} переполнен! Добавить животное {animal.Name} не удалось!\n");
                 }
                 else if (AmountOfCurrentAnimals.ContainsKey(animal.Id))
                 {
 
-                    throw new ArgumentException($"Животное {animal.Name} уже существует в коровнике {Title}");
+                    throw new ArgumentException($"Животное {animal.Name} уже существует в коровнике {Title}\n");
                 }
             }
             else
             {
-                throw new ArgumentNullException("Животное или текущее количество животных недоступно!");
+                throw new ArgumentNullException("Животное или текущее количество животных недоступно!\n");
             }
         }
 
@@ -40,12 +40,12 @@
             if (AmountOfCurrentAnimals.ContainsKey(id))
             {
                 AmountOfCurrentAnimals.TryGetValue(id, out Cattle anim);
-                Console.WriteLine($"Животное {anim.Name} успешно удалено из коровника {Title}");
+                Console.WriteLine($"Животное {anim.Name} успешно удалено из коровника {Title}\n");
                 AmountOfCurrentAnimals.Remove(id);
             }
             else
             {
-                throw new ArgumentException("Животное с таким ID не найдено!");
+                throw new ArgumentException("Животное с таким ID не найдено!\n");
             }
         }
 
@@ -55,12 +55,12 @@
             {
                 foreach (var animal in AmountOfCurrentAnimals)
                 {
-                    Console.WriteLine($"Id: {animal.Value.Id}\nПорода: {animal.Value.Breed}\nПол: {animal.Value.Gender}\n" +
-                        $"Возраст: {animal.Value.Age}\nВес: {animal.Value.Weight}\nЦвет: {animal.Value.Color}\n");
+                    Console.WriteLine($"Id: {animal.Value.Id}\nПол: {animal.Value.Gender}\n" +
+                        $"Возраст: {animal.Value.Age}\nВес: {animal.Value.Weight}\n");
                 }
             } else
             {
-                Console.WriteLine("Животных нет!");
+                Console.WriteLine("Животных нет!\n");
             }
         }
     }

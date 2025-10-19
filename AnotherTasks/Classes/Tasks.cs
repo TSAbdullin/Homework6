@@ -12,5 +12,10 @@
             Title = title;
             Description = description;
         }
+
+        public void PrintTask() // метод на печать информацию
+        {
+            Console.WriteLine($"ID: {Id}\nНазвание: {Title}\nОписание: {Description}\n");
+        }
     }
 }
