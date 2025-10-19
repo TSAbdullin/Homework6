@@ -2,9 +2,9 @@
 
 namespace AnotherTasks.Classes
 {
-    class Сowshed : Barn
+    class Cowshed : Barn
     {
-        public Сowshed(string title, Dictionary<Guid, Cattle> amountOfCurrentAnimals, Dictionary<Guid, Staff> employers, int amountOfFeeders, double square, int maxCapacityOfAnimals)
+        public Cowshed(string title, Dictionary<Guid, Cattle> amountOfCurrentAnimals, Dictionary<Guid, Staff> employers, int amountOfFeeders, double square, int maxCapacityOfAnimals)
         {
             Id = Guid.NewGuid();
             Title = title;

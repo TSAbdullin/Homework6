@@ -50,7 +50,7 @@ namespace AnotherTasks.BaseClasses
             Console.Write("Введите описание задач: ");
             string descriptionTask = Console.ReadLine();
 
-            Tasks task = new Tasks(titleTask, descriptionTask);
+            var task = new Tasks(titleTask, descriptionTask);
             
             ListOfTasks.Add(task.Id, task);
             Console.WriteLine("Задание успешно добавлено\n");

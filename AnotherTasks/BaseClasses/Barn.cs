@@ -1,4 +1,7 @@
-﻿namespace AnotherTasks.BaseClasses
+﻿using AnotherTasks.Classes;
+using AnotherTasks.Enums;
+
+namespace AnotherTasks.BaseClasses
 {
     abstract class Barn // абстрактный класс для коровника
     {
@@ -59,6 +62,67 @@
                         $"Возраст: {animal.Value.Age}\nВес: {animal.Value.Weight}\n");
                 }
             } else
+            {
+                Console.WriteLine("Животных нет!\n");
+            }
+        }
+
+        public void AddStaff()
+        {
+            //if (!Employers.ContainsKey(staff.Id))
+            //{
+            //    Employers.Add(staff.Id, staff);
+            //    Console.WriteLine($"Работник {staff.Name} устроился в {Title}");
+            //}
+            //else
+            //{
+            //    Console.WriteLine($"{staff.Name} уже работает в {Title}");
+            //}
+
+            Console.Write("Введите имя сотрудника: ");
+            var name = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("Имя не может быть пустым.");
+
+            Console.Write("Введите фамилию: ");
+            var surname = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(surname))
+                throw new ArgumentNullException("Фамилия не может быть пустой.");
+
+            Console.Write("Введите роль сотрудника(Бригадиры, Доярки, Скотники, Слесари, Охранники): ");
+            if (!Enum.TryParse<Role>(Console.ReadLine(), true, out var role))
+            {
+                Console.WriteLine("Некорректная роль. По умолчанию будет Без роли.");
+                role = Role.Без_роли;
+            }
+
+            Console.Write("Введите дату рождения (формат YYYY.MM.DD): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out var birthday))
+                throw new FormatException("Неверный формат даты.");
+
+            var employer = new Employer(name: name, surname: surname, birthday: birthday, ListOfTasks: new Dictionary<Guid, Tasks>(), role: role);
+
+            if (Employers.ContainsKey(employer.Id))
+            {
+                Console.WriteLine($"{employer.Name} {employer.SurName} уже есть в списке.");
+                return;
+            }
+
+            Employers.Add(employer.Id, employer);
+            Console.WriteLine($"Принят: {employer.Name} {employer.SurName}, роль: {employer.Role}, возраст: {employer.Age}");
+        }
+      
+
+        public void PrintAllStaff()
+        {
+            if (Employers.Count > 0)
+            {
+                foreach (var staff in Employers)
+                {
+                    Console.WriteLine($"Id: {staff.Value.Id}\nИмя: {staff.Value.Name}\nРоль: {staff.Value.Role}\n");
+                }
+            }
+            else
             {
                 Console.WriteLine("Животных нет!\n");
             }
