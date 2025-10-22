@@ -2,13 +2,14 @@
 {
     class Tasks
     {
-        public Guid Id { get; } // идентификатор задания
+        public long Id { get; } // идентификатор задания
         public string Title { get; set; } // название задания
         public string Description { get; set; } // описание задания
+        private static long _idCounter = 1;
 
         public Tasks(string title, string description = "Отсутствует")
         {
-            Id = Guid.NewGuid();
+            Id = _idCounter++;
             Title = title;
             Description = description;
         }

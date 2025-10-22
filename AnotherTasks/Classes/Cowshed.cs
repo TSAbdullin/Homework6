@@ -4,9 +4,10 @@ namespace AnotherTasks.Classes
 {
     class Cowshed : Barn
     {
-        public Cowshed(string title, Dictionary<Guid, Cattle> amountOfCurrentAnimals, Dictionary<Guid, Staff> employers, int amountOfFeeders, double square, int maxCapacityOfAnimals)
+        private static long _idCounter = 1;
+        public Cowshed(string title, Dictionary<long, Cattle> amountOfCurrentAnimals, Dictionary<long, Staff> employers, int amountOfFeeders, double square, int maxCapacityOfAnimals)
         {
-            Id = Guid.NewGuid();
+            Id = _idCounter++;
             Title = title;
             AmountOfCurrentAnimals = amountOfCurrentAnimals;
             Employers = employers;

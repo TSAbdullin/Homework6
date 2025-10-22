@@ -5,7 +5,7 @@ namespace AnotherTasks.BaseClasses
 {
     abstract class Cattle // абстрактный класс рогатого скота
     {
-        public Guid Id { get; protected set; } // идентификатор
+        public long Id { get; protected set; } // идентификатор
         public string Name { get; set; } // имя 
         public Gender Gender { get; set; } // пол
         public int Age { get; set; } // возраст

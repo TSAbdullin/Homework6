@@ -5,14 +5,15 @@ namespace AnotherTasks.BaseClasses
 {
     abstract class Staff // абстрактный класс для сотрудника
     {
-        public Guid Id { get; protected set; } // идентификатор сотрудника
+        public long Id { get; protected set; } // идентификатор сотрудника
         public string Name { get; set; } // имя сотрудника
         public string SurName { get; set; } // фамилия сотрудника
         public int Age { get; set; } // возраст сотрудника
-        public Dictionary<Guid, Tasks> ListOfTasks { get; set; } // словарь, содержащий список задач работника
+        public Dictionary<long, Tasks> ListOfTasks { get; set; } // словарь, содержащий список задач работника
         public Role Role { get; set; } // роль персонала
+        
 
-        public void DeleteTask(Guid id) // метод на удаление задач
+        public void DeleteTask(long id) // метод на удаление задач
         {
             if (ListOfTasks.ContainsKey(id)) 
             {
@@ -25,15 +26,15 @@ namespace AnotherTasks.BaseClasses
             }
         }
 
-        public void Feed(Cattle targetAnimal) // покормить 
+        public void FeedAll() // покормить 
         {
             if (Role.Equals(Role.Доярки))
             {
-                Console.WriteLine($"{Name} покормил {targetAnimal.Name}\n");
+                Console.WriteLine($"{Name} покормил всех животных\n");
             }
             else
             {
-                Console.WriteLine($"Роль {Role} не позволяет {Name} покормить {targetAnimal.Name}\n");
+                Console.WriteLine($"Роль {Role} не позволяет {Name} покормить животных\n");
             }
         }
 
@@ -62,7 +63,7 @@ namespace AnotherTasks.BaseClasses
             {
                 foreach (var task in ListOfTasks)
                 {
-                    Console.WriteLine(task.Value.Title);
+                    Console.WriteLine($"{task.Key}: {task.Value.Title}");
                 }
             }
             else
