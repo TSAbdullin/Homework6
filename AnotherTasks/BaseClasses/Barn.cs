@@ -1,6 +1,6 @@
 ﻿using AnotherTasks.Classes;
 using AnotherTasks.Enums;
-using System.Net.Http.Headers;
+using System.Runtime.ExceptionServices;
 
 namespace AnotherTasks.BaseClasses
 {
@@ -53,7 +53,9 @@ namespace AnotherTasks.BaseClasses
                 var animal = new Cow(cowName, cowBreed, cowGender, cowAge);
 
                 AmountOfCurrentAnimals.Add(animal.Id, animal);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Животное {animal.Name} успешно добавлено в коровник {Title}\n");
+                Console.ResetColor();
             }
             else if (AmountOfCurrentAnimals.Count == MaxCapacityOfAnimals)
             {
@@ -61,14 +63,16 @@ namespace AnotherTasks.BaseClasses
             }
         }
 
-        public void AddAnimal(Cattle animal)
+        public void AddAnimal(Cattle animal) // метод который добавлять животное с учетом параметра
         {
             if (animal != null)
             {
                 if (AmountOfCurrentAnimals.Count < MaxCapacityOfAnimals)
                 {
                     AmountOfCurrentAnimals.Add(animal.Id, animal);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Животное {animal.Name} успешно добавлено в коровник {Title}\n");
+                    Console.ResetColor();
                 }
                 else if (AmountOfCurrentAnimals.Count == MaxCapacityOfAnimals)
                 {
@@ -91,7 +95,9 @@ namespace AnotherTasks.BaseClasses
                 if (AmountOfCurrentAnimals.ContainsKey(id))
                 {
                     AmountOfCurrentAnimals.TryGetValue(id, out Cattle anim);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Животное {anim.Name} успешно удалено из коровника {Title}\n");
+                    Console.ResetColor();
                     AmountOfCurrentAnimals.Remove(id);
                 }
                 else
@@ -118,7 +124,7 @@ namespace AnotherTasks.BaseClasses
             }
         }
 
-        public void AddStaff()
+        public void AddStaff() // метод, который добавляет сотрудника с нуля
         {
             Console.Write("Введите имя сотрудника: ");
             var name = Console.ReadLine();
@@ -129,6 +135,12 @@ namespace AnotherTasks.BaseClasses
             var surname = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(surname))
                 throw new ArgumentNullException("Фамилия не может быть пустой.");
+
+            Console.WriteLine("Типы ролей(строго по регистру): ");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine($"{(Role)i}");
+            }
 
             Console.Write("Введите роль сотрудника(Бригадиры, Доярки, Скотники, Слесари, Охранники): ");
             if (!Enum.TryParse<Role>(Console.ReadLine(), true, out var role))
@@ -150,15 +162,20 @@ namespace AnotherTasks.BaseClasses
             }
 
             Employers.Add(employer.Id, employer);
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Принят: {employer.Name} {employer.SurName}, роль: {employer.Role}, возраст: {employer.Age}");
+            Console.ResetColor();
         }
 
-        public void AddStaff(Staff staff)
+        public void AddStaff(Staff staff) // метод, который добавляет уже имеющиегося сотрудника
         {
             if (!Employers.ContainsKey(staff.Id))
             {
                 Employers.Add(staff.Id, staff);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Работник {staff.Name} устроился в {Title}");
+                Console.ResetColor();
             }
             else
             {
@@ -166,10 +183,10 @@ namespace AnotherTasks.BaseClasses
             }
         }
 
-        public void DeleteStaff()
+        public void DeleteStaff() // удаление сотрудника по ID
         {
             if (IsContainStaffAndPrintAllStaff())
-            {
+            { 
                 Console.Write("Введите ID персонала: ");
                 bool isChoosen = false;
                 while (!isChoosen)
@@ -182,7 +199,10 @@ namespace AnotherTasks.BaseClasses
                     if (Employers.ContainsKey(idStaff))
                     {
                         isChoosen = true;
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"Персонал с ID {idStaff} уволен!");
+                        Console.ResetColor();
                         Employers.Remove(idStaff);
                     }
                     else
@@ -193,7 +213,7 @@ namespace AnotherTasks.BaseClasses
             }
         }
 
-        public bool IsContainStaffAndPrintAllStaff()
+        public bool IsContainStaffAndPrintAllStaff() // проверка есть ли сотрудники в коровнике и если есть, то выводим их
         {
             if (Employers.Count > 0)
             {
@@ -210,9 +230,12 @@ namespace AnotherTasks.BaseClasses
             }
         }
 
-        public void SelectStaff()
+        public void SelectStaff() // метод для выбора сотрудника для последующего управления им
         {
-            IsContainStaffAndPrintAllStaff();
+            if (!IsContainStaffAndPrintAllStaff())
+            {
+                return;
+            }
 
             Console.Write("Введите ID сотрудника: ");
 
@@ -223,11 +246,12 @@ namespace AnotherTasks.BaseClasses
 
             if (Employers.ContainsKey(idStaff))
             {
+                Console.BackgroundColor = ConsoleColor.Blue;
                 Console.WriteLine("1. Добавить задачу");
                 Console.WriteLine("2. Удалить задачу");
                 Console.WriteLine("3. Вывести список задач");
                 Console.WriteLine("4. Покормить животных");
-
+                Console.ResetColor();
 
                 Console.Write("Введите номер действия:");
 
@@ -269,7 +293,9 @@ namespace AnotherTasks.BaseClasses
                         break;
 
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Такой команды нет!");
+                        Console.ResetColor();
                         break;
                 }
             }

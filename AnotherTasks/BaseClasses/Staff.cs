@@ -18,7 +18,9 @@ namespace AnotherTasks.BaseClasses
             if (ListOfTasks.ContainsKey(id)) 
             {
                 ListOfTasks.Remove(id);
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Задача удалена!\n");
+                Console.ResetColor();
             }
             else
             {
@@ -30,11 +32,15 @@ namespace AnotherTasks.BaseClasses
         {
             if (Role.Equals(Role.Доярки))
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{Name} покормил всех животных\n");
+                Console.ResetColor();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Роль {Role} не позволяет {Name} покормить животных\n");
+                Console.ResetColor();
             }
         }
 
@@ -54,7 +60,9 @@ namespace AnotherTasks.BaseClasses
             var task = new Tasks(titleTask, descriptionTask);
             
             ListOfTasks.Add(task.Id, task);
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Задание успешно добавлено\n");
+            Console.ResetColor();
         }
 
         public void PrintAllTasks() // метод на печать задач

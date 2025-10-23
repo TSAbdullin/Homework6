@@ -41,54 +41,72 @@ class StartProgram
         var task2 = new Tasks("Убрать в коровнике 1", "Зайти в коровник 1, взять и убраться");
 
 
-        
-
-        bool isContinue = true;
-
-        while (isContinue)
+        try
         {
-            Console.WriteLine("Список действий:\n" +
-            "1. Выбрать коровник\n" +
-            "2. Удалить коровник\n" +
-            "3. Добавить коровник\n" +
-            "4. Выход\n");
+            bool isContinue = true;
 
-            Console.Write("Введите номер действия: ");
-            if (!byte.TryParse(Console.ReadLine(), out var action))
+            while (isContinue)
             {
-                throw new FormatException("Введенные параметр не число!");
-            }
+                Console.WriteLine("\n\nНажмите, чтобы продолжить!");
+                Console.ReadKey();
+                Console.Clear();
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Список действий:\n" +
+                "1. Выбрать коровник\n" +
+                "2. Удалить коровник\n" +
+                "3. Добавить коровник\n" +
+                "4. Вывести все существующие коровники\n" +
+                "5. Выход\n");
+                Console.ResetColor();
 
-            if (action > 4 || action < 1)
-            {
-                throw new ArgumentOutOfRangeException("Такого действия нет!");
-            }
+                Console.Write("Введите номер действия: ");
+                if (!byte.TryParse(Console.ReadLine(), out var action))
+                {
+                    throw new FormatException("Введенные параметр не число!");
+                }
 
-            switch (action)
-            {
-                case 1:
-                    ChooseBarn();
-                    break;
 
-                case 2:
-                    DeleteBarn();
-                    break;
+                switch (action)
+                {
+                    case 1:
+                        ChooseBarn();
+                        break;
 
-                case 3:
-                    AddCowshed();
-                    break;
+                    case 2:
+                        DeleteBarn();
+                        break;
 
-                case 4:
-                    isContinue = false;
-                    break;
+                    case 3:
+                        AddCowshed();
+                        break;
 
-                default:
-                    Console.WriteLine("Такой команды нет!");
-                    break;
+                    case 4:
+                        PrintAllBarns();
+                        break;
+
+                    case 5:
+                        isContinue = false;
+                        break;
+
+                    default:
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Такой команды нет!\n");
+                        Console.ResetColor();
+                        break;
+                }
             }
         }
+        catch (Exception ex)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Ошибка: {ex.Message}");
+            Console.ResetColor();
+        }
 
-        void PrintAllBarns()
+        //////// Вспомогательные методы: 
+
+        void PrintAllBarns() // метод для вывода всех существующих коровников в формате(ID: название коровника)
         {
             foreach (var cowshed in barns)
             {
@@ -96,7 +114,7 @@ class StartProgram
             }
         }
 
-        void ChooseBarn()
+        void ChooseBarn() // выбрать коровник для последующих действий с ним
         {
             PrintAllBarns();
 
@@ -106,9 +124,9 @@ class StartProgram
                 throw new FormatException("Не число!");
             }
 
-            if (barns.ContainsKey(keyOfBarn))
+            if (barns.ContainsKey(keyOfBarn)) // если такой коровник существует, то выводим список действий, который можно с ним сделать
             {
-
+                Console.BackgroundColor = ConsoleColor.Blue;
                 Console.WriteLine("\n1. Добавить сотрудника");
                 Console.WriteLine("2. Убрать сотрудника");
                 Console.WriteLine("3. Выбрать сотрудника");
@@ -116,6 +134,8 @@ class StartProgram
                 Console.WriteLine("5. Добавить животное");
                 Console.WriteLine("6. Удалить животное");
                 Console.WriteLine("7. Вывести список всех животных\n");
+                Console.ResetColor();
+
                 Console.Write("Введите номер действия: ");
                 if (int.TryParse(Console.ReadLine(), out int num))
                 {
@@ -152,7 +172,10 @@ class StartProgram
                             break;
 
                         default:
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Такой команды нет!");
+                            Console.ResetColor();
                             break;
                     }
                 }
@@ -163,7 +186,7 @@ class StartProgram
             }
         }
 
-        void DeleteBarn()
+        void DeleteBarn() // удалить коровник по его ID
         {
             Console.WriteLine("Список всех коровников в формате(ID: Коровник)");
 
@@ -177,7 +200,10 @@ class StartProgram
 
             if (barns.ContainsKey(keyOfBarn))
             {
-                Console.WriteLine($"Коровник снесен!");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Коровник снесен!\n");
+                Console.ResetColor();
                 barns.Remove(keyOfBarn);
             }
             else
@@ -186,7 +212,7 @@ class StartProgram
             }
         }
 
-        void AddCowshed()
+        void AddCowshed() // добавить коровник с нуля
         {
             Console.Write("Введите название коровника: ");
             string titleOfCowshed = Console.ReadLine();
